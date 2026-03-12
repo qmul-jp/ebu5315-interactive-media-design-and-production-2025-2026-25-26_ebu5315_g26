@@ -1,2 +1,17 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/HLEvEf24)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23090740&assignment_repo_type=AssignmentRepo)
+# 25/26_EBU5315_G26
+
+## Project Title: 
+
+## Members:
+Li Dan, 2024213604, 241118256, ld19050598698@outlook.com
+[组员A姓名], [组员A北邮学号], [组员AQM学号], [组员A邮箱]
+[组员B姓名], [组员B北邮学号], [组员BQM学号], [组员B邮箱]
+
+## Assigned TA: Wenjing Yu
+
+## The allocation of tasks among members
+| Member | Responsible Module | Technology Stack |
+|--------|-------------------|------------------|
+| Li Dan | [待分配模块] | [待确认技术栈] |
+| [组员A姓名] | [待分配模块] | [待确认技术栈] |
+| [组员B姓名] | [待分配模块] | [待确认技术栈] |
