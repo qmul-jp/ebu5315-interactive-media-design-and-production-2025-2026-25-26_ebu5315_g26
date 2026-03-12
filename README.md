@@ -3,9 +3,9 @@
 ## Project Title: 
 
 ## Members:
-Li Dan, 2024213604, 241118256, ld19050598698@outlook.com
-[组员A姓名], [组员A北邮学号], [组员AQM学号], [组员A邮箱]
-[组员B姓名], [组员B北邮学号], [组员BQM学号], [组员B邮箱]
+Dan Li, 2024213604, 241118256, jp2024213604@qmul.ac.uk
+Ruohan Qi，2024213576，241118360，jp2024213576@qmul.ac.uk
+Yue Liu，2024213627，241118326，jp2024213627@qmul.ac.uk
 
 ## Assigned TA: Wenjing Yu
 
