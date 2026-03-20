@@ -2,7 +2,7 @@
 
 ## Group Number：25/26EBU5315G26
 
-## Project Title:Circle Theorem Interactive
+## Project Title:GeoCircle Interactive
 
 ## Members:
 Dan Li, 2024213604, 241118256, jp2024213604@qmul.ac.uk
