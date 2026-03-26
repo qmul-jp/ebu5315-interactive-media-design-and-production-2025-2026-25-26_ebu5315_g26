@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" class="light-mode font-medium">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoCircle Interactive - Quiz</title>
+    <link rel="stylesheet" href="quiz-style.css">
+    <!-- ARIA无障碍适配 -->
+    <meta name="description" content="GCSE Circle Geometry Interactive Quiz">
+</head>
+<body>
+    <!-- 头部导航栏 -->
+    <header class="header">
+        <div class="logo">GeoCircle Interactive</div>
+        <!-- 面包屑导航 -->
+        <nav class="breadcrumb">
+            <a href="#">Home</a> &gt; <span>Quiz</span>
+        </nav>
+        <!-- 全局控制栏 -->
+        <div class="controls">
+            <button id="langBtn">中文</button>
+            <button id="fontBtn">A-</button>
+            <button id="themeBtn">Dark</button>
+            <button id="soundBtn">Sound On</button>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="quiz-container">
+        <!-- 难度选择区 -->
+        <section class="level-section">
+            <h2 id="levelTitle">Circle Geometry Quiz - Select Difficulty</h2>
+            <div class="level-buttons">
+                <button id="level1" class="level-btn unlocked">Level 1<br>Basic</button>
+                <button id="level2" class="level-btn locked">Level 2<br>Intermediate</button>
+                <button id="level3" class="level-btn locked">Level 3<br>Advanced</button>
+            </div>
+            <p id="unlockTip" class="tip">Intermediate unlocks at 80%+ Basic score</p>
+        </section>
+
+        <!-- 答题核心区 -->
+        <section class="question-section hidden">
+            <div class="question-header">
+                <h3 id="questionNum">Question 1/5</h3>
+                <p id="scoreText">Score: 0 | Correct: 0</p>
+            </div>
+            <!-- 几何SVG图示 -->
+            <div class="diagram" id="diagram"></div>
+            <!-- 题目 -->
+            <p id="questionText" class="question"></p>
+            <!-- 选项 -->
+            <div class="options" id="options"></div>
+            <!-- 操作按钮 -->
+            <div class="btn-group">
+                <button id="submitBtn" class="submit-btn">Submit Answer</button>
+                <button id="nextBtn" class="next-btn hidden">Next Question</button>
+                <button id="resetBtn" class="reset-btn">Reset Progress</button>
+            </div>
+        </section>
+
+        <!-- 反馈与解析区 -->
+        <section class="feedback-section hidden">
+            <div id="feedbackIcon" class="feedback-icon"></div>
+            <p id="feedbackText" class="feedback-text"></p>
+            <p id="explanationText" class="explanation"></p>
+        </section>
+    </main>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
