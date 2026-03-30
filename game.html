@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Circle Master | EBU5315 Game</title>
+    <link rel="stylesheet" href="game.css" />
+</head>
+<body>
 
+    <!-- ① HEADER: Breadcrumb + Inclusive Controls -->
+    <header class="site-header">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            🏠 <a href="index.html" id="nav-home">Home</a>
+            <span class="sep">&rsaquo;</span>
+            <span id="nav-game">Game</span>
+        </nav>
+
+        <div class="a11y-toolbar" role="toolbar" aria-label="Accessibility tools">
+            <button class="btn btn--theme" id="btn-theme"
+                    onclick="toggleTheme()" aria-label="Toggle colour theme">
+                🌙 Dark Mode
+            </button>
+            <button class="btn btn--lang" id="btn-lang"
+                    onclick="toggleLang()" aria-label="Switch language">
+                🌐 中文
+            </button>
+            <button class="btn btn--font" onclick="changeFontSize(1)"
+                    aria-label="Increase font size">A+</button>
+            <button class="btn btn--font" onclick="changeFontSize(-1)"
+                    aria-label="Decrease font size">A-</button>
+        </div>
+    </header>
+
+    <!-- GAME CONTAINER -->
+    <main class="game-container" role="main">
+
+        <h1 class="game-title" id="title">Circle Master</h1>
+        <p  class="game-desc"  id="desc">
+            Pop the correct circle based on the GCSE Math formula!
+        </p>
+
+        <!-- ② HUD: Score / Lives / Level -->
+        <section class="hud" aria-label="Game status">
+            <div class="hud__item">
+                <span class="hud__label" id="txt-score">Score</span>:
+                <span class="hud__value" id="score">0</span>
+            </div>
+            <div class="hud__item">
+                <span class="hud__label" id="txt-lives">Lives</span>:
+                <span class="hud__value" id="lives">❤️❤️❤️</span>
+            </div>
+            <div class="hud__item">
+                <span class="hud__label" id="txt-level">Level</span>:
+                <span class="hud__value" id="level">1</span>
+            </div>
+        </section>
+
+        <!-- ③ QUESTION BOX -->
+        <div class="question-box" id="question-box" role="status" aria-live="polite">
+            Click [Start Game] to begin!
+        </div>
+
+        <!-- ⑤ HTML5 CANVAS — Interactive Game Area (800 × 400 logical px) -->
+        <div class="canvas-wrapper" aria-label="Game canvas area">
+            <canvas id="gameCanvas" width="800" height="400"
+                    role="img" aria-label="Interactive circle game area">
+                Your browser does not support the HTML5 Canvas element.
+            </canvas>
+        </div>
+
+        <!-- ⑥ CONTROLS — Start / Reset / Hint -->
+        <div class="controls-bar" role="group" aria-label="Game controls">
+            <button class="btn btn--start" id="btn-start"
+                    onclick="startGame()">&#9654; Start Game</button>
+            <button class="btn btn--reset" id="btn-reset"
+                    onclick="resetGame()">&#8634; Reset</button>
+            <button class="btn btn--hint"  id="btn-hint"
+                    onclick="alertHint()">&#63; Hint</button>
+        </div>
+
+        <!-- ⑦ GAME OVER BANNER — display:none → shown when lives ≤ 0 -->
+        <div class="game-over-banner" id="game-over" role="alert" aria-live="assertive">
+            Game Over!
+        </div>
+
+    </main>
+
+    <script src="game.js"></script>
+</body>
+</html>
