@@ -1,332 +1,246 @@
-/* ============================================================
-   game.js — Circle Master
-   Covers: i18n · Theme · Font Size · Game Engine · Canvas
-   ============================================================ */
-
-'use strict';
-
-// ─── 1. MULTILINGUAL DICTIONARY (Bilingual EN / ZH) ─────────────────
 const i18n = {
-    en: {
-        home:      'Home',
-        game:      'Game',
-        themeDark: '🌙 Dark Mode',
-        themeLight:'☀️ Light Mode',
-        langBtn:   '🌐 中文',
- Master',
-        desc:      'Pop the correct circle based on the GCSE Math formula!',
-        score:     'Score',
-        lives:     'Lives',
-        level:     'Level',
-        startText: 'Click [Start Game] to begin!',
-        startBtn:  '▶ Start Game',
-        resetBtn:  '↺ Reset',
-        hintBtn:   '❓ Hint',
-        gameOver:  'Game Over!',
-        hintText:  'Area          = π × r²\nCircumference = 2 × π × r\n(π ≈ 3.14159)',
-        qArea:     'Find the circle with Area ≈ ',
-        qCircum:   'Find the circle with Circumference ≈ ',
-    },
-    zh: {
-        home:      '主页',
-        game:      '游戏',
-        themeDark: '🌙 开启暗黑',
-        themeLight:'☀️ 开启明亮',
-        langBtn:   '🌐 English',
-        desc:      '根据数学公式，戳破正确的圆！',
-        score:     '得分',
-        lives:     '生命',
-        level:     '关卡',
-        startText: '点击【开始游戏】！',
-        startBtn:  '▶ 开始游戏',
-        resetBtn:  '↺ 重置',
-        hintBtn:   '❓ 提示',
-        gameOver:  '游戏结束！',
-        hintText:  '面积 = π × r²\n周长 = 2 × π × r\n（π ≈ 3.14159）',
-        qArea:     '找出面积约为 ',
-        qCircum:   '找出周长约为 ',
-    },
-};
+            en: {
+                home: "Home", game: "Game", themeDark: "🌙 Dark Mode", themeLight: "☀️ Light Mode",
+                langBtn: "🌐 中文", title: "Circle Master", 
+                desc: "Pop the correct circle based on the GCSE Math formula!",
+                score: "Score", lives: "Lives", level: "Level", 
+                startText: "Click [Start Game] to begin!", startBtn: "▶ Start Game",
+                resetBtn: "↺ Reset", hintBtn: "❓ Hint", gameOver: "Game Over!",
+                hintText: "Area = π × r²\nCircumference = 2 × π × r\n(π ≈ 3.14)",
+                qArea: "Find the circle with Area ≈ ",
+                qCircum: "Find the circle with Circumference ≈ "
+            },
+            zh: {
+                home: "主页", game: "游戏", themeDark: "🌙 开启暗黑", themeLight: "☀️ 开启明亮",
+                langBtn: "🌐 English", title: "圆形大师", 
+                desc: "根据数学公式戳破正确的圆球！",
+                score: "得分", lives: "生命", level: "关卡", 
+                startText: "点击【开始游戏】！", startBtn: "▶ 开始游戏",
+                resetBtn: "↺ 重置", hintBtn: "❓ 提示", gameOver: "游戏结束！",
+                hintText: "面积 = π × r²\n周长 = 2 × π × r\n(π ≈ 3.14)",
+                qArea: "找出面积约为 的圆：",
+                qCircum: "找出周长约为 的圆："
+            }
+        };
 
-let currentLang = 'en';
+        let currentLang = 'en';
 
-/** Apply all translated strings to DOM */
-function updateLang() {
-    const t   = i18n[currentLang];
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-    document.getElementById('nav-home').textContent   = t.home;
-    document.getElementById('nav-game').textContent   = t.game;
-    document.getElementById('btn-lang').textContent   = t.langBtn;
-    document.getElementById('btn-theme').textContent  = dark ? t.themeLight : t.themeDark;
-    document.getElementById('title').textContent      = t.title;
-    document.getElementById('desc').textContent       = t.desc;
-    document.getElementById('txt-score').textContent  = t.score;
-    document.getElementById('txt-lives').textContent  = t.lives;
-    document.getElementById('txt-level').textContent  = t.level;
-    document.getElementById('btn-start').textContent  = t.startBtn;
-    document.getElementById('btn-reset').textContent  = t.resetBtn;
-    document.getElementById('btn-hint').textContent   = t.hintBtn;
-    document.getElementById('game-over').textContent  = t.gameOver;
-
-    if (!state.isPlaying) {
-        document.getElementById('question-box').textContent = t.startText;
-    } else {
-        renderQuestionText();
-    }
-}
-
-function toggleLang() {
-    currentLang = currentLang === 'en' ? 'zh' : 'en';
-    updateLang();
-}
-
-// ─── 2. INCLUSIVE DESIGN: THEME & FONT SIZE ─────────────────────────
-
-function toggleTheme() {
-    const root = document.documentElement;
-    root.setAttribute(
-        'data-theme',
-        root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-    );
-    updateLang();
-}
-
-let baseFontSize = 16;
-
-function changeFontSize(step) {
-    baseFontSize = Math.min(24, Math.max(12, baseFontSize + step * 2));
-    document.documentElement.style.setProperty('--font-size', baseFontSize + 'px');
-}
-
-function alertHint() {
-    alert(i18n[currentLang].hintText);
-}
-
-// ─── 3. GAME STATE ───────────────────────────────────────────────────
-
-const state = {
-    score:        0,
-    lives:        3,
-    level:        1,
-    isPlaying:    false,
-    questionType: 'area',   // 'area' | 'circumference'
-    targetCircle: null,
-};
-
-// ─── 4. CANVAS SETUP ─────────────────────────────────────────────────
-
-const canvas  = document.getElementById('gameCanvas');
-const ctx     = canvas.getContext('2d');
-let   circles = [];
-let   animId  = null;
-
-// ─── 5. CIRCLE CLASS ─────────────────────────────────────────────────
-
-const CIRCLE_COLORS = [
-    '#e91e63', // pink
-    '#9c27b0', // purple
-    '#3f51b5', // indigo
-    '#00bcd4', // cyan
-    '#ffeb3b', // yellow
-    '#ff9800', // orange
-];
-
-class Circle {
-    /**
-     * @param {number} r     - radius in logical canvas px
-     * @param {string} color - fill colour
-     */
-    constructor(r, color) {
-        this.r     = r;
-        this.color = color;
-        this.x     = Math.random() * (canvas.width  - r * 2) + r;
-        this.y     = Math.random() * (canvas.height - r * 2) + r;
-        // Speed scales slightly with level
-        const spd  = 1 + state.level * 0.3;
-        this.dx    = (Math.random() - 0.5) * spd * 2;
-        this.dy    = (Math.random() - 0.5) * spd * 2;
-
-        // GCSE maths properties
-        this.area          = Math.PI * r * r;
-        this.circumference = 2 * Math.PI * r;
-    }
-
-    draw() {
-        // Shadow glow
-        ctx.shadowColor = this.color;
-        ctx.shadowBlur  = 12;
-
-        // Circle fill
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-        ctx.closePath();
-
-        ctx.shadowBlur = 0;
-
-        // Radius label inside circle
-        ctx.fillStyle      = 'rgba(255,255,255,.92)';
-        ctx.font           = `bold ${Math.max(11, this.r * 0.4)}px monospace`;
-        ctx.textAlign      = 'center';
-        ctx.textBaseline   = 'middle';
-        ctx.fillText(`r=${this.r}`, this.x, this.y);
-    }
-
-    update() {
-        // Bounce off walls
-        if (this.x + this.r >= canvas.width  || this.x - this.r <= 0) this.dx = -this.dx;
-        if (this.y + this.r >= canvas.height || this.y - this.r <= 0) this.dy = -this.dy;
-        this.x += this.dx;
-        this.y += this.dy;
-        this.draw();
-    }
-}
-
-// ─── 6. LEVEL GENERATION ─────────────────────────────────────────────
-
-function generateLevel() {
-    circles = [];
-    const count = Math.min(3 + state.level, 6);
-
-    for (let i = 0; i < count; i++) {
-        const r = Math.floor(Math.random() * 40) + 10; // 10–50
-        circles.push(new Circle(r, CIRCLE_COLORS[i % CIRCLE_COLORS.length]));
-    }
-
-    // Pick random target
-    state.targetCircle  = circles[Math.floor(Math.random() * circles.length)];
-    // Level 1 → area only; level 2+ → random
-    state.questionType  = (state.level === 1)
-        ? 'area'
-        : (Math.random() > 0.5 ? 'area' : 'circumference');
-
-    renderQuestionText();
-}
-
-function renderQuestionText() {
-    const t  = i18n[currentLang];
-    const tc = state.targetCircle;
-    if (!tc) return;
-
-    const val = state.questionType === 'area'
-        ? tc.area.toFixed(2)
-        : tc.circumference.toFixed(2);
-
-    const label = state.questionType === 'area' ? t.qArea : t.qCircum;
-
-    document.getElementById('question-box').textContent = label + val;
-}
-
-// ─── 7. ANIMATION LOOP ───────────────────────────────────────────────
-
-function animate() {
-    if (!state.isPlaying) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    circles.forEach(c => c.update());
-    animId = requestAnimationFrame(animate);
-}
-
-// ─── 8. HUD UPDATE ───────────────────────────────────────────────────
-
-function updateHUD() {
-    document.getElementById('score').textContent = state.score;
-    document.getElementById('level').textContent = state.level;
-    document.getElementById('lives').textContent =
-        '❤️'.repeat(state.lives) + '💔'.repeat(3 - state.lives);
-}
-
-// ─── 9. CANVAS CLICK HANDLER ─────────────────────────────────────────
-
-canvas.addEventListener('click', (e) => {
-    if (!state.isPlaying) return;
-
-    const rect   = canvas.getBoundingClientRect();
-    // Scale-corrected coordinates (handles CSS resizing)
-    const scaleX = canvas.width  / rect.width;
-    const scaleY = canvas.height / rect.height;
-    const cx     = (e.clientX - rect.left) * scaleX;
-    const cy     = (e.clientY - rect.top)  * scaleY;
-
-    for (const circle of circles) {
-        const dist = Math.hypot(cx - circle.x, cy - circle.y);
-        if (dist > circle.r) continue;
-
-        if (circle === state.targetCircle) {
-            // ✅ Correct hit
-            state.score += 10;
-            if (state.score % 30 === 0) state.level++;
-            updateHUD();
-            generateLevel();
-        } else {
-            // ❌ Wrong hit — tolerance feedback (⑦ Question box flash)
-            state.lives--;
-            updateHUD();
-            const qb = document.getElementById('question-box');
-            qb.classList.add('question-box--error');
-            setTimeout(() => qb.classList.remove('question-box--error'), 400);
-
-            if (state.lives <= 0) endGame();
+        function updateLang() {
+            const t = i18n[currentLang];
+            document.getElementById('nav-home').innerText = t.home;
+            document.getElementById('nav-game').innerText = t.game;
+            document.getElementById('btn-lang').innerText = t.langBtn;
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('desc').innerText = t.desc;
+            document.getElementById('txt-score').innerText = t.score;
+            document.getElementById('txt-lives').innerText = t.lives;
+            document.getElementById('txt-level').innerText = t.level;
+            document.getElementById('btn-start').innerText = t.startBtn;
+            document.getElementById('btn-reset').innerText = t.resetBtn;
+            document.getElementById('btn-hint').innerText = t.hintBtn;
+            document.getElementById('game-over').innerText = t.gameOver;
+            
+            // 更新按钮文本以适应当前主题
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.getElementById('btn-theme').innerText = isDark ? t.themeLight : t.themeDark;
+            
+            if(!isPlaying) document.getElementById('question-box').innerText = t.startText;
+            else generateQuestionText(); // 如果游戏中则更新题目语言
         }
-        break;
-    }
-});
 
-// ─── 10. GAME LIFECYCLE ──────────────────────────────────────────────
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            updateLang();
+        }
 
-function startGame() {
-    if (state.isPlaying) return;
+        // ================= 2. 包容性设计 (Theme & Font Size) =================
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            updateLang();
+        }
 
-    // Reset state silently then begin
-    _resetState();
-    state.isPlaying = true;
+        let baseFontSize = 16;
+        function changeFontSize(step) {
+            baseFontSize += step * 2;
+            if (baseFontSize < 12) baseFontSize = 12;
+            if (baseFontSize > 24) baseFontSize = 24;
+            document.documentElement.style.setProperty('--font-size-base', baseFontSize + 'px');
+        }
 
-    document.getElementById('game-over').style.display = 'none';
-    document.querySelector('.canvas-wrapper').classList.remove('idle');
+        function alertHint() {
+            alert(i18n[currentLang].hintText);
+        }
 
-    generateLevel();
-    animate();
-}
+        // ================= 3. 游戏引擎与逻辑 =================
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let circles = [];
+        let targetCircle = null;
+        let animationId;
+        
+        let score = 0;
+        let lives = 3;
+        let level = 1;
+        let isPlaying = false;
+        let questionType = 'area'; // 'area' or 'circumference'
 
-function resetGame() {
-    _resetState();
-    cancelAnimationFrame(animId);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 圆形类
+        class Circle {
+            constructor(r, color) {
+                this.r = r;
+                this.x = Math.random() * (canvas.width - r * 2) + r;
+                this.y = Math.random() * (canvas.height - r * 2) + r;
+                this.dx = (Math.random() - 0.5) * 2;
+                this.dy = (Math.random() - 0.5) * 2;
+                this.color = color;
+                
+                // 计算数学属性 (GCSE 知识点)
+                this.area = Math.PI * Math.pow(this.r, 2);
+                this.circumference = 2 * Math.PI * this.r;
+            }
 
-    document.getElementById('question-box').textContent =
-        i18n[currentLang].startText;
-    document.getElementById('game-over').style.display = 'none';
-    document.querySelector('.canvas-wrapper').classList.add('idle');
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+                
+                // 绘制半径提示
+                ctx.fillStyle = "white";
+                ctx.font = "14px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(`r=${this.r}`, this.x, this.y);
+            }
 
-    updateHUD();
-}
+            update() {
+                // 碰壁反弹物理效果
+                if (this.x + this.r > canvas.width || this.x - this.r < 0) this.dx = -this.dx;
+                if (this.y + this.r > canvas.height || this.y - this.r < 0) this.dy = -this.dy;
+                
+                this.x += this.dx;
+                this.y += this.dy;
+                this.draw();
+            }
+        }
 
-function endGame() {
-    state.isPlaying = false;
-    cancelAnimationFrame(animId);
+        function generateLevel() {
+            circles = [];
+            const colors = ['#e91e63', '#9c27b0', '#3f51b5', '#00bcd4', '#ffeb3b', '#ff9800'];
+            let numCircles = 3 + level; // 难度递增
+            if (numCircles > 6) numCircles = 6;
 
-    // ⑦ Show Game Over Banner (display:none → block)
-    const banner = document.getElementById('game-over');
-    banner.style.display = 'block';
+            for (let i = 0; i < numCircles; i++) {
+                // 随机生成 10 到 50 之间的整数半径
+                let radius = Math.floor(Math.random() * 40) + 10;
+                circles.push(new Circle(radius, colors[i % colors.length]));
+            }
 
-    document.getElementById('question-box').textContent =
-        i18n[currentLang].gameOver;
-}
+            // 随机选择一个目标圆
+            targetCircle = circles[Math.floor(Math.random() * circles.length)];
+            
+            // 等级1求面积，等级2及以后随机求面积或周长
+            questionType = (level === 1) ? 'area' : (Math.random() > 0.5 ? 'area' : 'circumference');
+            generateQuestionText();
+        }
 
-function _resetState() {
-    state.score        = 0;
-    state.lives        = 3;
-    state.level        = 1;
-    state.isPlaying    = false;
-    state.targetCircle = null;
-}
+        function generateQuestionText() {
+            if(!targetCircle) return;
+            const t = i18n[currentLang];
+            let qText = "";
+            if (questionType === 'area') {
+                qText = t.qArea + targetCircle.area.toFixed(2);
+            } else {
+                qText = t.qCircum + targetCircle.circumference.toFixed(2);
+            }
+            document.getElementById('question-box').innerText = qText;
+        }
 
-// ─── 11. INITIALISE ──────────────────────────────────────────────────
+        function animate() {
+            if (!isPlaying) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            circles.forEach(circle => circle.update());
+            animationId = requestAnimationFrame(animate);
+        }
 
-(function init() {
-    updateHUD();
-    updateLang();
-    // Show wireframe idle cross-lines before game starts
-    document.querySelector('.canvas-wrapper').classList.add('idle');
-})();
+        // 交互：点击画布判断
+        canvas.addEventListener('click', (e) => {
+            if (!isPlaying) return;
+            const rect = canvas.getBoundingClientRect();
+            // 解决自适应缩放导致的坐标偏移
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clickX = (e.clientX - rect.left) * scaleX;
+            const clickY = (e.clientY - rect.top) * scaleY;
+
+            let hit = false;
+            for (let i = 0; i < circles.length; i++) {
+                const circle = circles[i];
+                const dist = Math.hypot(clickX - circle.x, clickY - circle.y);
+                
+                if (dist <= circle.r) {
+                    hit = true;
+                    if (circle === targetCircle) {
+                        // 答对
+                        score += 10;
+                        if (score % 30 === 0) level++; // 每对3题升一级
+                        updateHUD();
+                        generateLevel();
+                    } else {
+                        // 答错
+                        lives--;
+                        updateHUD();
+                        document.getElementById('question-box').style.backgroundColor = "rgba(244, 67, 54, 0.3)";
+                        setTimeout(() => {
+                            document.getElementById('question-box').style.backgroundColor = "rgba(76, 175, 80, 0.1)";
+                        }, 300);
+
+                        if (lives <= 0) {
+                            endGame();
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+
+        function updateHUD() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('level').innerText = level;
+            document.getElementById('lives').innerText = '❤️'.repeat(lives) + '💔'.repeat(3 - lives);
+        }
+
+        function startGame() {
+            if (isPlaying) return;
+            resetGame();
+            isPlaying = true;
+            document.getElementById('game-over').style.display = 'none';
+            generateLevel();
+            animate();
+        }
+
+        function resetGame() {
+            score = 0;
+            lives = 3;
+            level = 1;
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateHUD();
+            document.getElementById('question-box').innerText = i18n[currentLang].startText;
+            document.getElementById('game-over').style.display = 'none';
+        }
+
+        function endGame() {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            document.getElementById('game-over').style.display = 'block';
+            document.getElementById('question-box').innerText = i18n[currentLang].gameOver;
+        }
+
+        // 初始化
+        updateLang();
