@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Master | EBU5315 Game</title>
+    <script src="game.js" defer></script>
+   <link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+    <!-- 头部导航与辅助功能 -->
+    <header>
+        <div class="breadcrumb">
+            🏠 <a href="index.html" id="nav-home">Home</a> > <span id="nav-game">Game</span>
+        </div>
+        <div class="controls">
+            <button class="btn-theme" onclick="toggleTheme()" id="btn-theme">🌙 Dark Mode</button>
+            <button class="btn-lang" onclick="toggleLang()" id="btn-lang">🌐 中文</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="changeFontSize(-1)">A-</button>
+        </div>
+    </header>
+
+    <!-- 游戏容器 -->
+    <div class="game-container">
+        <h1 id="title">Circle Master</h1>
+        <p id="desc">Pop the correct circle based on the GCSE Math formula!</p>
+        
+        <div class="hud">
+            <div><span id="txt-score">Score</span>: <span id="score">0</span></div>
+            <div><span id="txt-lives">Lives</span>: <span id="lives">❤️❤️❤️</span></div>
+            <div><span id="txt-level">Level</span>: <span id="level">1</span></div>
+        </div>
+
+        <div id="question-box">Click [Start Game] to begin!</div>
+
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+        <div style="margin-top: 20px;">
+            <button onclick="startGame()" id="btn-start" style="background-color: var(--primary-color);">▶ Start Game</button>
+            <button class="btn-danger" onclick="resetGame()" id="btn-reset">↺ Reset</button>
+            <button onclick="alertHint()" id="btn-hint">❓ Hint</button>
+        </div>
+
+        <div id="game-over">Game Over!</div>
+    </div>
+
+
+</body>
+</html>
