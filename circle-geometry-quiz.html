@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Geometry Quiz | Coursework</title>
+    <!-- 引入重命名后的CSS -->
+    <link rel="stylesheet" href="circle-geometry-quiz.css">
+</head>
+<body>
+    <!-- 顶部导航栏（线框图标准） -->
+    <header class="top-nav">
+        <div class="nav-left">Home | Quiz</div>
+        <div class="nav-center" id="breadcrumb">Home > Quiz</div>
+        <div class="nav-right">© 2026</div>
+    </header>
+
+    <!-- 主容器 -->
+    <div class="quiz-container">
+        <!-- 等级选择区 -->
+        <div class="level-select" id="levelSection">
+            <h1 class="page-title">CHOOSE LEVEL</h1>
+            <div class="level-buttons">
+                <button class="level-btn" data-level="1">Level 1<br>Basic</button>
+                <button class="level-btn" data-level="2">Level 2<br>Intermediate</button>
+                <button class="level-btn" data-level="3">Level 3<br>Advanced</button>
+            </div>
+        </div>
+
+        <!-- 答题区（默认隐藏） -->
+        <div class="quiz-main hidden" id="quizSection">
+            <!-- 计分面板（精细化评分） -->
+            <div class="score-card">
+                <div class="score-item">
+                    <span>Total Score</span>
+                    <span id="totalScore">0</span>
+                </div>
+                <div class="score-item">
+                    <span>Correct</span>
+                    <span id="correctCount">0</span>
+                </div>
+                <div class="score-item">
+                    <span>Streak</span>
+                    <span id="streak">0</span>
+                </div>
+                <div class="score-item">
+                    <span>Progress</span>
+                    <span id="progress">0/10</span>
+                </div>
+            </div>
+
+            <!-- 题目区域 -->
+            <div class="question-card">
+                <p class="question-num" id="questionNum">Question 1/10</p>
+                <p class="question-text" id="questionText"></p>
+                <div class="diagram" id="diagram"></div>
+            </div>
+
+            <!-- 选项区域 -->
+            <div class="options-group" id="optionsGroup"></div>
+
+            <!-- 操作按钮 -->
+            <div class="btn-group">
+                <button class="action-btn" id="submitBtn">Submit Answer</button>
+                <button class="action-btn hidden" id="nextBtn">Next Question</button>
+                <button class="action-btn" id="restartBtn">Restart</button>
+            </div>
+
+            <!-- 解析反馈区（教学级） -->
+            <div class="feedback-section hidden" id="feedbackSection">
+                <div class="feedback-title" id="feedbackTitle"></div>
+                <div class="feedback-content" id="feedbackContent"></div>
+            </div>
+        </div>
+
+        <!-- 最终结果页 -->
+        <div class="result-card hidden" id="resultSection">
+            <h2>🎉 Quiz Completed!</h2>
+            <p id="finalResult"></p>
+            <button class="action-btn" id="backLevelBtn">Back to Levels</button>
+        </div>
+    </div>
+
+    <!-- 底部栏 -->
+    <footer class="bottom-bar">
+        <p>Questions from Question Bank | AI: No Repetition | Interactive Feedback</p>
+    </footer>
+
+    <!-- 引入重命名后的JS -->
+    <script src="circle-geometry-quiz-script.js"></script>
+</body>
+</html>
