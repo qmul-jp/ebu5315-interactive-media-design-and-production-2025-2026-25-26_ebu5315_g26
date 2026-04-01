@@ -1,71 +1,101 @@
 <!DOCTYPE html>
-<html lang="en" class="light-mode font-medium">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoCircle Interactive - Quiz</title>
-    <link rel="stylesheet" href="quiz-style.css">
-    <!-- ARIA无障碍适配 -->
-    <meta name="description" content="GCSE Circle Geometry Interactive Quiz">
+    <title>Circle Geometry Learning - Homepage</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!-- 头部导航栏 -->
-    <header class="header">
-        <div class="logo">GeoCircle Interactive</div>
-        <!-- 面包屑导航 -->
-        <nav class="breadcrumb">
-            <a href="#">Home</a> &gt; <span>Quiz</span>
+    <header class="navbar">
+        <a href="index.html" class="logo">🔵 Circle Geometry</a>
+        <div class="breadcrumb">Home</div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="../game/index.html">Game</a></li>
+                <li><a href="../quiz/index.html">Quiz</a></li>
+                <li><a href="#" class="lang-btn" id="cnBtn">中文</a></li>
+                <li><a href="#" class="lang-btn" id="enBtn">English</a></li>
+                <li><a href="#" class="font-btn" id="fontBig">A+</a></li>
+                <li><a href="#" class="font-btn" id="fontSmall">A-</a></li>
+            </ul>
         </nav>
-        <!-- 全局控制栏 -->
-        <div class="controls">
-            <button id="langBtn">中文</button>
-            <button id="fontBtn">A-</button>
-            <button id="themeBtn">Dark</button>
-            <button id="soundBtn">Sound On</button>
-        </div>
     </header>
 
-    <!-- 主内容区 -->
-    <main class="quiz-container">
-        <!-- 难度选择区 -->
-        <section class="level-section">
-            <h2 id="levelTitle">Circle Geometry Quiz - Select Difficulty</h2>
-            <div class="level-buttons">
-                <button id="level1" class="level-btn unlocked">Level 1<br>Basic</button>
-                <button id="level2" class="level-btn locked">Level 2<br>Intermediate</button>
-                <button id="level3" class="level-btn locked">Level 3<br>Advanced</button>
-            </div>
-            <p id="unlockTip" class="tip">Intermediate unlocks at 80%+ Basic score</p>
-        </section>
-
-        <!-- 答题核心区 -->
-        <section class="question-section hidden">
-            <div class="question-header">
-                <h3 id="questionNum">Question 1/5</h3>
-                <p id="scoreText">Score: 0 | Correct: 0</p>
-            </div>
-            <!-- 几何SVG图示 -->
-            <div class="diagram" id="diagram"></div>
-            <!-- 题目 -->
-            <p id="questionText" class="question"></p>
-            <!-- 选项 -->
-            <div class="options" id="options"></div>
-            <!-- 操作按钮 -->
-            <div class="btn-group">
-                <button id="submitBtn" class="submit-btn">Submit Answer</button>
-                <button id="nextBtn" class="next-btn hidden">Next Question</button>
-                <button id="resetBtn" class="reset-btn">Reset Progress</button>
+    <main>
+        <section class="hero">
+            <div class="hero-placeholder">
+                <img src="https://via.placeholder.com/1200x400?text=Circle+Geometry+Video+Area" alt="Circle Geometry Demo">
+                <button class="play-btn">▶ Play Circle Theorem Video</button>
             </div>
         </section>
 
-        <!-- 反馈与解析区 -->
-        <section class="feedback-section hidden">
-            <div id="feedbackIcon" class="feedback-icon"></div>
-            <p id="feedbackText" class="feedback-text"></p>
-            <p id="explanationText" class="explanation"></p>
+        <section class="theorems">
+            <h2>Core Circle Theorems (GCSE)</h2>
+            <div class="theorem-cards">
+                <div class="card">
+                    <h3>Theorem 1</h3>
+                    <p>The angle at the centre is twice the angle at the circumference.</p>
+                </div>
+                <div class="card">
+                    <h3>Theorem 2</h3>
+                    <p>Angles in the same segment are equal.</p>
+                </div>
+                <div class="card">
+                    <h3>Theorem 3</h3>
+                    <p>The angle in a semicircle is a right angle.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="usp">
+            <h2>Our Unique Advantages</h2>
+            <div class="usp-cards">
+                <div class="usp-card">📚 Interactive Learning</div>
+                <div class="usp-card">🎮 Fun Educational Games</div>
+                <div class="usp-card">🤖 AI Learning Assistant</div>
+                <div class="usp-card">📱 Mobile Friendly</div>
+                <div class="usp-card">🌐 Bilingual Support</div>
+            </div>
+        </section>
+
+        <section class="ai-chat">
+            <div class="ai-greeting">🤖 Hello! I'm your AI Geometry Helper. Click to chat with me!</div>
+            <button class="chat-btn">Open AI Chat</button>
+        </section>
+
+        <section class="contact">
+            <h2>Contact Us</h2>
+            <form class="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your full name">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your email address">
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Type your message here"></textarea>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </section>
+
+        <section class="ads">
+            <div class="ads-banner">
+                <img src="https://via.placeholder.com/1200x100?text=Advertisement+Area" alt="Ad Banner">
+                <p>📢 Advertisement Area - Monetisation Section</p>
+            </div>
         </section>
     </main>
 
-    <script src="quiz.js"></script>
+    <footer class="footer">
+        <p>© 2026 Circle Geometry Learning | All Rights Reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
