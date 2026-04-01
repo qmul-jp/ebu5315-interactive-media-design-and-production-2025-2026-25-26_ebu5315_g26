@@ -1,4 +1,3 @@
-// Font size adjustment function (Accessibility)
 const fontBig = document.getElementById('fontBig');
 const fontSmall = document.getElementById('fontSmall');
 const body = document.body;
@@ -17,13 +16,11 @@ fontSmall.addEventListener('click', (e) => {
     }
 });
 
-// AI Chatbot button (Version 1 placeholder)
 const chatBtn = document.querySelector('.chat-btn');
 chatBtn.addEventListener('click', () => {
     alert('AI Chatbot will be implemented in Version 2.');
 });
 
-// Contact form submit function
 const form = document.querySelector('.contact-form');
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -31,7 +28,6 @@ form.addEventListener('submit', (e) => {
     form.reset();
 });
 
-// Language button alerts
 const enBtn = document.getElementById('enBtn');
 const cnBtn = document.getElementById('cnBtn');
 
