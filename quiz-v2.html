@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoCircle Interactive | Quiz</title>
+    <link rel="stylesheet" href="quiz-style-v2.css">
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="header">
+        <div class="header-left">
+            <span class="logo">🏠 GeoCircle Interactive</span>
+            <span class="breadcrumb" id="breadcrumb">Home > Quiz</span>
+        </div>
+        <div class="header-right">
+            <button id="fontBtn" class="icon-btn" title="Font Size">🔤</button>
+            <button id="colorBtn" class="icon-btn" title="Color Blind">👁️</button>
+            <button id="themeBtn" class="icon-btn" title="Theme">🌙</button>
+            <button id="langBtn" class="icon-btn" title="Language">🌐</button>
+            <button id="mobileBtn" class="icon-btn" title="Mobile View">📱</button>
+        </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="settingsPanel" class="settings hidden">
+        <div class="setting-item">
+            <h4>Font Size</h4>
+            <div class="btn-row">
+                <button class="small-btn" data-size="small">S</button>
+                <button class="small-btn active" data-size="medium">M</button>
+                <button class="small-btn" data-size="large">L</button>
+                <button class="small-btn" data-size="xl">XL</button>
+            </div>
+        </div>
+        <div class="setting-item">
+            <h4>Color Blind</h4>
+            <div class="btn-row">
+                <button class="small-btn active" data-color="normal">Normal</button>
+                <button class="small-btn" data-color="protanopia">Red-Green</button>
+                <button class="small-btn" data-color="tritanopia">Blue-Yellow</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容 -->
+    <div class="container" id="mainContainer">
+        <!-- 页面1：选择等级 -->
+        <div id="levelPage" class="page">
+            <h1 class="title">Circle Geometry Quiz</h1>
+            <p class="subtitle">Master GCSE circle theorems with interactive practice</p>
+            <div class="level-buttons">
+                <button class="level-btn" data-level="1">
+                    <div class="level-num">Level 1</div>
+                    <div class="level-desc">Basic Definitions</div>
+                </button>
+                <button class="level-btn" data-level="2">
+                    <div class="level-num">Level 2</div>
+                    <div class="level-desc">Core Theorems</div>
+                </button>
+                <button class="level-btn" data-level="3">
+                    <div class="level-num">Level 3</div>
+                    <div class="level-desc">Advanced Problems</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 页面2：答题 -->
+        <div id="quizPage" class="page hidden">
+            <!-- 计分板 -->
+            <div class="score-bar">
+                <div class="score-item">
+                    <span class="label">Score</span>
+                    <span class="value" id="score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Correct</span>
+                    <span class="value" id="correct">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Streak</span>
+                    <span class="value" id="streak">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="label">Progress</span>
+                    <span class="value" id="progress">1/10</span>
+                </div>
+            </div>
+
+            <!-- 题目 -->
+            <div class="question-card">
+                <div class="q-num" id="qNum">Question 1/10</div>
+                <div class="q-text" id="qText"></div>
+                <div class="diagram" id="diagram"></div>
+            </div>
+
+            <!-- 选项 -->
+            <div class="options" id="options"></div>
+
+            <!-- 按钮 -->
+            <div class="action-buttons">
+                <button id="submitBtn" class="main-btn">Submit Answer</button>
+                <button id="nextBtn" class="main-btn hidden">Next Question</button>
+                <button id="backBtn" class="second-btn">Back to Levels</button>
+            </div>
+
+            <!-- 反馈 -->
+            <div id="feedback" class="feedback hidden">
+                <div class="feedback-title" id="feedbackTitle"></div>
+                <div class="feedback-text" id="feedbackText"></div>
+            </div>
+        </div>
+
+        <!-- 页面3：结果 -->
+        <div id="resultPage" class="page hidden">
+            <div class="result-card">
+                <h2 class="result-title">Quiz Complete!</h2>
+                <pre id="resultText"></pre>
+                <div class="action-buttons">
+                    <button id="restartBtn" class="main-btn">Try Again</button>
+                    <button id="homeBtn" class="second-btn">Back to Levels</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div id="confirmDialog" class="dialog hidden">
+        <div class="dialog-box">
+            <h3 id="dialogTitle"></h3>
+            <p id="dialogMsg"></p>
+            <div class="dialog-btns">
+                <button id="yesBtn" class="danger-btn">Yes</button>
+                <button id="noBtn" class="second-btn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz-script-v2.js"></script>
+</body>
+</html>
