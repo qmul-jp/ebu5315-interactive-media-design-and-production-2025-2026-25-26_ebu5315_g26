@@ -1,0 +1,438 @@
+/* ================================================================
+   game.css — Circle Master | Mobile-First Responsive Stylesheet
+   Breakpoints: default (mobile) → 480px → 768px → 1024px
+   ================================================================ */
+
+/* ── 1. Design Tokens ─────────────────────────────────────────── */
+:root {
+    /* Color Palette */
+    --clr-bg:           #f4f4f9;
+    --clr-surface:      #ffffff;
+    --clr-text:         #1a1a2e;
+    --clr-text-muted:   #666688;
+    --clr-primary:      #4CAF50;
+    --clr-danger:       #f44336;
+    --clr-accent:       #2196F3;
+    --clr-hint:         #ff9800;
+    --clr-border:       #dde0f0;
+    --clr-canvas-bg:    #0a0a1a;
+
+    /* Shadows */
+    --shadow-sm:  0 2px 6px  rgba(0, 0, 0, .08);
+    --shadow-md:  0 4px 16px rgba(0, 0, 0, .12);
+    --shadow-lg:  0 8px 32px rgba(0, 0, 0, .16);
+
+    /* Typography */
+    --font-ui:    'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size:  16px;
+
+    /* Layout */
+    --radius-sm:  6px;
+    --radius-md:  10px;
+    --radius-lg:  16px;
+    --gap:        12px;
+
+    /* Safe area insets (iPhone notch / home bar) */
+    --safe-top:    env(safe-area-inset-top,    0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left:   env(safe-area-inset-left,   0px);
+    --safe-right:  env(safe-area-inset-right,  0px);
+}
+
+/* ── Dark Theme ───────────────────────────────────────────────── */
+[data-theme="dark"] {
+    --clr-bg:         #0d0d1a;
+    --clr-surface:    #16213e;
+    --clr-text:       #e8e8f8;
+    --clr-text-muted: #8888aa;
+    --clr-border:     #2a2a4a;
+    --shadow-sm:      0 2px 6px  rgba(0, 0, 0, .5);
+    --shadow-md:      0 4px 16px rgba(0, 0, 0, .6);
+    --shadow-lg:      0 8px 32px rgba(0, 0, 0, .7);
+}
+
+/* ── 2. Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* 防止移动端长按出现菜单 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    font-size: var(--font-size);
+    scroll-behavior: smooth;
+    /* 防止 iOS Safari 字体自动缩放 */
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-ui);
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    line-height: 1.6;
+    min-height: 100vh;
+    /* 支持 iPhone 刘海屏 padding */
+    padding-top: var(--safe-top);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+    transition: background-color .3s, color .3s;
+    /* 防止移动端页面左右滑动 */
+    overflow-x: hidden;
+}
+
+/* ── 3. HEADER ① ──────────────────────────────────────────────── */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background-color: var(--clr-surface);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--clr-border);
+
+    /* 移动端: 竖向两行布局 */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px;
+
+    transition: background-color .3s;
+}
+
+.breadcrumb {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--clr-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.breadcrumb a {
+    color: var(--clr-accent);
+    text-decoration: none;
+}
+.breadcrumb a:hover,
+.breadcrumb a:focus { text-decoration: underline; }
+
+.breadcrumb .sep { color: var(--clr-border); font-size: 1.1rem; }
+
+/* Accessibility Toolbar */
+.a11y-toolbar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* ── 4. BUTTON SYSTEM ─────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    /* 移动端 Touch Target: 最小 44×44px (Apple HIG 标准) */
+    min-height: 40px;
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+
+    font-family: var(--font-ui);
+    font-size: .8rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+
+    transition: transform .1s, opacity .2s, box-shadow .2s;
+    box-shadow: var(--shadow-sm);
+
+    /* 防止移动端文字被选中 */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.btn:active {
+    transform: scale(.95);
+    opacity: .85;
+}
+
+/* 桌面端 hover 效果 */
+@media (hover: hover) {
+    .btn:hover {
+        opacity: .85;
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+    }
+}
+
+.btn:focus-visible {
+    outline: 3px solid var(--clr-accent);
+    outline-offset: 2px;
+}
+
+/* Button Color Variants */
+.btn--theme { background-color: #607d8b; }
+.btn--lang  { background-color: #9c27b0; }
+.btn--font  { background-color: var(--clr-accent); padding: 8px 10px; }
+
+/* Game Control Buttons */
+.btn--start { background-color: var(--clr-primary); }
+.btn--reset {
+    background-color: var(--clr-danger);
+    border: 2px dashed rgba(255,255,255,.4);
+}
+.btn--hint  { background-color: var(--clr-hint); }
+
+/* ── 5. GAME CONTAINER ② ─────────────────────────────────────── */
+.game-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 14px 12px
+             calc(14px + var(--safe-bottom)) 12px; /* home bar 间距 */
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+}
+
+.game-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: -.02em;
+    color: var(--clr-text);
+}
+
+.game-desc {
+    font-size: .9rem;
+    text-align: center;
+    color: var(--clr-text-muted);
+    line-height: 1.5;
+}
+
+/* ── 6. HUD ③ ────────────────────────────────────────────────── */
+.hud {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--clr-bg);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    padding: 10px 8px;
+    gap: 4px;
+}
+
+.hud__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 0; /* 防止溢出 */
+}
+
+.hud__label {
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--clr-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.hud__value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--clr-text);
+    line-height: 1;
+    /* emoji 心形在移动端不换行 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90px;
+}
+
+/* ── 7. QUESTION BOX ④ ───────────────────────────────────────── */
+.question-box {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 14px 16px;
+    border: 2px dashed var(--clr-primary);
+    border-radius: var(--radius-md);
+    background-color: rgba(76, 175, 80, .08);
+    color: var(--clr-text);
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.4;
+    transition: background-color .3s, border-color .3s;
+}
+
+.question-box--error {
+    border-color: var(--clr-danger) !important;
+    background-color: rgba(244, 67, 54, .12) !important;
+}
+
+/* ── 8. CANVAS WRAPPER ⑤ ─────────────────────────────────────── */
+.canvas-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 2px solid var(--clr-border);
+    box-shadow: var(--shadow-md);
+    background-color: var(--clr-canvas-bg);
+    /* 高度由 JS 动态控制, CSS 给一个最小值 */
+    min-height: 220px;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    /* 高度由 JS 根据屏幕动态设置 */
+    height: 100%;
+    background-color: var(--clr-canvas-bg);
+    cursor: crosshair;
+    /* 关键: 禁用触摸滚动, 让 touch 事件直接传给 canvas */
+    touch-action: none;
+}
+
+/* Canvas 空闲状态遮罩 (游戏未开始时显示) */
+.canvas-idle-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(10, 10, 26, .75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: none; /* 不拦截点击 */
+    transition: opacity .4s;
+}
+
+.canvas-idle-overlay.hidden {
+    opacity: 0;
+}
+
+.canvas-idle-icon {
+    font-size: 2.5rem;
+    animation: bounce 1.2s ease-in-out infinite;
+}
+
+.canvas-idle-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255,255,255,.8);
+    letter-spacing: .04em;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0);    }
+    50%       { transform: translateY(-8px); }
+}
+
+/* ── 9. CONTROLS BAR ⑥ ───────────────────────────────────────── */
+.controls-bar {
+    display: grid;
+    /* 移动端: 3列等宽 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.controls-bar .btn {
+    width: 100%;
+    min-height: 48px;  /* 移动端更大的点击区域 */
+    font-size: .85rem;
+    border-radius: var(--radius-md);
+}
+
+/* ── 10. GAME OVER BANNER ⑦ ──────────────────────────────────── */
+.game-over-banner {
+    display: none;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--clr-danger);
+    letter-spacing: .04em;
+    padding: 16px;
+    border: 2px dashed var(--clr-danger);
+    border-radius: var(--radius-md);
+    background-color: rgba(244, 67, 54, .08);
+    animation: pulse-in .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes pulse-in {
+    from { transform: scale(.7); opacity: 0; }
+    to   { transform: scale(1);  opacity: 1; }
+}
+
+/* ── 11. RESPONSIVE BREAKPOINTS ──────────────────────────────── */
+
+/* ---- 480px: 大屏手机 / 小平板 ---- */
+@media (min-width: 480px) {
+    .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+    }
+
+    .game-container { padding: 16px 18px; }
+
+    .game-title   { font-size: 2rem; }
+    .game-desc    { font-size: 1rem; }
+
+    .question-box { font-size: 1.15rem; }
+
+    .hud__value   { font-size: 1.4rem; max-width: 120px; }
+}
+
+/* ---- 768px: 平板 / 横屏手机 ---- */
+@media (min-width: 768px) {
+    .game-container { padding: 20px 24px; gap: 16px; }
+
+    .game-title   { font-size: 2.2rem; }
+    .question-box { font-size: 1.3rem; min-height: 64px; }
+
+    .controls-bar { gap: 12px; }
+    .controls-bar .btn { font-size: .95rem; min-height: 52px; }
+
+    .btn { font-size: .9rem; padding: 9px 16px; }
+}
+
+/* ---- 1024px: 桌面端 ---- */
+@media (min-width: 1024px) {
+    .game-container {
+        padding: 28px 32px;
+        gap: 18px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+        background-color: var(--clr-surface);
+        margin: 24px auto;
+    }
+
+    .game-title   { font-size: 2.4rem; }
+    .question-box { font-size: 1.5rem; padding: 18px 24px; }
+
+    .controls-bar .btn { min-height: 56px; font-size: 1rem; }
+}
+
+/* ---- 横屏模式 (Landscape Mobile) ---- */
+@media (orientation: landscape) and (max-height: 500px) {
+    /* 横屏时减小 Header 高度, 给 Canvas 更多空间 */
+    .site-header   { padding: 6px 14px; }
+    .game-title    { font-size: 1.2rem; }
+    .game-desc     { display: none; } /* 隐藏描述节省空间 */
+    .game-container { gap: 8px; padding: 8px 12px; }
+    .hud           { padding: 6px 8px; }
+    .hud__value    { font-size: 1rem; }
+    .question-box  { font-size: .9rem; min-height: 40px; padding: 8px; }
+    .controls-bar .btn { min-height: 40px; font-size: .8rem; }
+}
+```__

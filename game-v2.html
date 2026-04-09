@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--
+        移动端关键 Meta:
+        viewport-fit=cover → 适配 iPhone 刘海屏 / 安全区域
+        user-scalable=no   → 防止双击缩放干扰游戏点击
+    -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+                   maximum-scale=1.0, user-scalable=no,
+                   viewport-fit=cover">
+
+    <!-- PWA / 移动端主屏图标支持 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#16213e">
+
+    <title>Circle Master | EBU5315 Game</title>
+
+    <!-- 外部 CSS (样式层分离) -->
+    <link rel="stylesheet" href="IGame.css">
+</head>
+<body>
+
+    <!-- ① HEADER: 面包屑导航 + 包容性工具栏 -->
+    <header class="site-header">
+        <div class="breadcrumb">
+            🏠 <a href="index.html" id="nav-home">Home</a>
+            <span class="sep">›</span>
+            <span id="nav-game">Game</span>
+        </div>
+
+        <!-- 包容性设计工具栏 (Accessibility Toolbar) -->
+        <div class="a11y-toolbar">
+            <button class="btn btn--theme" id="btn-theme"
+                    onclick="toggleTheme()" aria-label="Toggle theme">
+                🌙 Dark
+            </button>
+            <button class="btn btn--lang" id="btn-lang"
+                    onclick="toggleLang()" aria-label="Toggle language">
+                🌐 中文
+            </button>
+            <button class="btn btn--font" onclick="changeFontSize(1)"
+                    aria-label="Increase font size">A+</button>
+            <button class="btn btn--font" onclick="changeFontSize(-1)"
+                    aria-label="Decrease font size">A-</button>
+        </div>
+    </header>
+
+    <!-- ② GAME CONTAINER -->
+    <main class="game-container" role="main">
+
+        <!-- 游戏标题 & 描述 -->
+        <h1 class="game-title" id="title">Circle Master</h1>
+        <p class="game-desc" id="desc">
+            Pop the correct circle based on the GCSE Math formula!
+        </p>
+
+        <!-- ③ HUD: Score / Lives / Level -->
+        <div class="hud" role="status" aria-live="polite">
+            <div class="hud__item">
+                <span class="hud__label" id="txt-score">Score</span>
+                <span class="hud__value" id="score">0</span>
+            </div>
+            <div class="hud__item">
+                <span class="hud__label" id="txt-lives">Lives</span>
+                <span class="hud__value" id="lives">❤️❤️❤️</span>
+            </div>
+            <div class="hud__item">
+                <span class="hud__label" id="txt-level">Level</span>
+                <span class="hud__value" id="level">1</span>
+            </div>
+        </div>
+
+        <!-- ④ 题目区 Question Box -->
+        <div class="question-box" id="question-box"
+             role="alert" aria-live="assertive">
+            Click [Start Game] to begin!
+        </div>
+
+        <!-- ⑤ Canvas 游戏画布区
+             注意: width/height 由 JS 根据屏幕尺寸动态设置
+             此处设置初始逻辑分辨率, CSS 将其拉伸到 100% 宽度 -->
+        <div class="canvas-wrapper" id="canvas-wrapper">
+            <canvas id="gameCanvas"
+                    width="800" height="400"
+                    aria-label="Game Canvas - tap circles to answer">
+            </canvas>
+
+            <!-- 游戏开始前的占位提示 (移动端友好) -->
+            <div class="canvas-idle-overlay" id="canvas-idle">
+                <span class="canvas-idle-icon">🎯</span>
+                <span class="canvas-idle-text" id="idle-text">
+                    Tap Start to Play
+                </span>
+            </div>
+        </div>
+
+        <!-- ⑥ 操作按钮区 Controls Bar -->
+        <div class="controls-bar">
+            <button class="btn btn--start" id="btn-start"
+                    onclick="startGame()" aria-label="Start game">
+                ▶ Start Game
+            </button>
+            <button class="btn btn--reset" id="btn-reset"
+                    onclick="resetGame()" aria-label="Reset game">
+                ↺ Reset
+            </button>
+            <button class="btn btn--hint" id="btn-hint"
+                    onclick="alertHint()" aria-label="Show hint">
+                ❓ Hint
+            </button>
+        </div>
+
+        <!-- ⑦ 游戏结束横幅 Game Over Banner (默认隐藏) -->
+        <div class="game-over-banner" id="game-over"
+             role="alert" aria-live="assertive">
+            Game Over!
+        </div>
+
+    </main>
+
+    <!-- 外部 JS (逻辑层分离), defer 确保 DOM 已加载 -->
+    <script src="IGame.js" defer></script>
+
+</body>
+</html>
