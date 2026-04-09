@@ -1,0 +1,584 @@
+/* EBU5315 Coursework Version2 - Global Style Sheet (Circle Geometry Homepage)
+   Pure English Comments | Color-Blind Friendly Color Scheme | Full Mobile Responsiveness
+   Accessibility Compliance | Dark/Light Mode Support | Touch-Friendly for Mobile
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+    /* Global transition for smooth interaction */
+}
+
+/* Root Variables: Define color scheme and theme variables (light/dark)
+   Color-Blind Friendly: Primary blue + Secondary orange (no red/green for protanopia/deuteranopia)
+*/
+:root {
+    --primary: #2563eb;
+    /* Main blue - universal visibility for all users */
+    --primary-hover: #1d4ed8;
+    /* Darker primary for hover state */
+    --secondary: #f97316;
+    /* Secondary orange - high contrast with primary */
+    --secondary-hover: #ea580c;
+    /* Darker secondary for hover state */
+    --bg-light: #f8fafc;
+    /* Light mode background */
+    --text-light: #1e293b;
+    /* Light mode text color */
+    --card-light: #ffffff;
+    /* Light mode card background */
+    --border-light: #e2e8f0;
+    /* Light mode border color */
+    --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.08);
+    /* Light mode shadow */
+    --bg-dark: #0f172a;
+    /* Dark mode background */
+    --text-dark: #f1f5f9;
+    /* Dark mode text color */
+    --card-dark: #1e293b;
+    /* Dark mode card background */
+    --border-dark: #334155;
+    /* Dark mode border color */
+    --shadow-dark: 0 2px 8px rgba(0, 0, 0, 0.3);
+    /* Dark mode shadow */
+}
+
+/* Default Light Mode Styles */
+body {
+    line-height: 1.6;
+    color: var(--text-light);
+    background-color: var(--bg-light);
+    font-size: 16px;
+    padding-bottom: 20px;
+}
+
+/* Dark Mode Styles - Toggled via JavaScript */
+body.dark {
+    color: var(--text-dark);
+    background-color: var(--bg-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Button Styles: Touch-friendly for mobile (min 44x44px - accessibility standard) */
+button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* Image Styles: Responsive with lazy loading support */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Heading 2 Styles: Responsive font (adapts to screen size) */
+h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 20px;
+    color: var(--primary);
+    text-align: center;
+}
+
+/* Card Base Styles: Light/dark mode compatibility */
+.card,
+.usp-card,
+.contact,
+.ai-chat {
+    background-color: var(--card-light);
+    box-shadow: var(--shadow-light);
+}
+
+/* Dark mode card styles */
+body.dark .card,
+body.dark .usp-card,
+body.dark .contact,
+body.dark .ai-chat {
+    background-color: var(--card-dark);
+    box-shadow: var(--shadow-dark);
+    border-color: var(--border-dark);
+}
+
+/* Navbar: Sticky position + flex layout + mobile adaption */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: var(--card-light);
+    box-shadow: var(--shadow-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Dark mode navbar */
+body.dark .navbar {
+    background-color: var(--card-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+/* Logo Styles: Responsive font size */
+.logo {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-weight: bold;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Breadcrumb Navigation (Mandatory Coursework Requirement) */
+.breadcrumb {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Dark mode breadcrumb */
+body.dark .breadcrumb {
+    color: #94a3b8;
+}
+
+/* Desktop Main Navigation */
+.main-nav {
+    display: flex;
+    align-items: center;
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Navigation Link Styles */
+.nav-link {
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+/* Active nav link style */
+.nav-link.active {
+    font-weight: bold;
+    color: var(--primary);
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+/* Dark mode active nav link */
+body.dark .nav-link.active {
+    background-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Nav link hover state */
+.nav-link:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+/* Dark mode nav link hover */
+body.dark .nav-link:hover {
+    background-color: rgba(37, 99, 235, 0.15);
+}
+
+/* Font adjustment and theme buttons: Transparent style */
+.font-btn,
+.theme-btn {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--border-light);
+}
+
+/* Dark mode for font/theme buttons */
+body.dark .font-btn,
+body.dark .theme-btn {
+    color: var(--text-dark);
+    border-color: var(--border-dark);
+}
+
+/* Hover state for font/theme buttons */
+.font-btn:hover,
+.theme-btn:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+/* Dark mode hover for font/theme buttons */
+body.dark .font-btn:hover,
+body.dark .theme-btn:hover {
+    background-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Mobile Hamburger Menu: Hidden by default (show on mobile breakpoint) */
+.mobile-nav-toggle {
+    display: none;
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Hamburger menu hover state */
+.mobile-nav-toggle:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Hero Section: Video placeholder + play button */
+.hero {
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Video placeholder: Relative position for play button overlay */
+.video-placeholder {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Play button style */
+.play-btn {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.play-btn:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* Core Theorems Section: Responsive grid layout */
+.theorems {
+    padding: 20px 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Theorem cards grid: Auto-fit (1col mobile, 2col tablet, 3col desktop) */
+.theorem-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Individual theorem card style */
+.card {
+    padding: 25px 20px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Card heading style */
+.card h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* Card hover animation: Slight lift + shadow */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+}
+
+/* Dark mode card hover */
+body.dark .card:hover {
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+}
+
+/* Unique Selling Points (USP) Section */
+.usp {
+    padding: 20px 15px;
+    max-width: 1200px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+/* USP cards container: Flex wrap for mobile */
+.usp-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+/* Individual USP card style */
+.usp-card {
+    padding: 15px 25px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 200px;
+    justify-content: center;
+}
+
+/* USP card icon style */
+.usp-card i {
+    color: var(--secondary);
+    font-size: 1.2rem;
+}
+
+/* AI Chatbot Section: Highlighted background with card style */
+.ai-chat {
+    padding: 30px 15px;
+    max-width: 1200px;
+    margin: 30px auto;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--border-light);
+}
+
+/* AI greeting text style */
+.ai-greeting {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    margin-bottom: 20px;
+}
+
+/* AI greeting icon */
+.ai-greeting i {
+    color: var(--secondary);
+    margin-right: 10px;
+}
+
+/* Chatbot button style */
+.chat-btn {
+    background-color: var(--primary);
+    color: white;
+}
+
+.chat-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Contact Form Section: Centered card with form elements */
+.contact {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 30px 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+}
+
+/* Contact form layout: Column flex */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 20px;
+}
+
+/* Form label style */
+.contact-form label {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Form input/textarea styles: Touch-friendly (min 44px height) */
+.contact-form input,
+.contact-form textarea {
+    padding: 12px 15px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: var(--card-light);
+    color: var(--text-light);
+    min-height: 44px;
+}
+
+/* Dark mode form inputs */
+body.dark .contact-form input,
+body.dark .contact-form textarea {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+    border-color: var(--border-dark);
+}
+
+/* Form input focus state: Highlight with primary color */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: 2px solid var(--primary);
+    border-color: transparent;
+}
+
+/* Submit button style */
+.submit-btn {
+    background-color: var(--primary);
+    color: white;
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Advertisement Banner Section: Monetisation requirement */
+.ads {
+    padding: 20px 15px;
+    max-width: 1200px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+/* Ad section heading */
+.ads h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* Ad banner card style */
+.ads-banner {
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 15px;
+    background-color: var(--card-light);
+}
+
+/* Ad banner text style */
+.ads-banner p {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+/* Dark mode ad banner text */
+body.dark .ads-banner p {
+    color: #94a3b8;
+}
+
+/* Ad banner icon */
+.ads-banner i {
+    color: var(--secondary);
+}
+
+/* Footer Section: Centered text with top border */
+.footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 15px;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    margin-top: 30px;
+}
+
+/* Dark mode footer border */
+body.dark .footer {
+    border-top-color: var(--border-dark);
+}
+
+/* Footer text style */
+.footer p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+/* Mobile Breakpoint: 768px (Tablet/Phone) - Core Responsive Rules */
+@media (max-width: 768px) {
+
+    /* Show hamburger menu on mobile */
+    .mobile-nav-toggle {
+        display: flex;
+        order: 99;
+    }
+
+    /* Mobile nav: Collapsed by default (height 0, overflow hidden) */
+    .main-nav {
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Open mobile nav state */
+    .main-nav.open {
+        height: auto;
+    }
+
+    /* Mobile nav list: Full width column */
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 15px;
+        padding: 10px 0;
+    }
+
+    .main-nav ul li {
+        width: 100%;
+    }
+
+    /* Full width nav links/buttons on mobile */
+    .nav-link,
+    .font-btn,
+    .theme-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Full width submit button on mobile */
+    .submit-btn {
+        align-self: stretch;
+    }
+
+    /* Reduced padding on mobile for all sections */
+    .hero,
+    .theorems,
+    .usp,
+    .ai-chat,
+    .contact,
+    .ads {
+        padding: 15px 10px;
+        margin: 20px auto;
+    }
+
+    /* Reduced card padding on mobile */
+    .card,
+    .usp-card {
+        padding: 20px 15px;
+    }
+}
+
+/* Small Phone Breakpoint: 320px (Extreme Mobile Adaptation) */
+@media (max-width: 320px) {
+
+    /* Reduced navbar padding */
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    /* Full width USP cards on small phones */
+    .usp-card {
+        min-width: 100%;
+    }
+
+    /* Reduced button padding on small phones */
+    button {
+        padding: 8px 12px;
+    }
+}
