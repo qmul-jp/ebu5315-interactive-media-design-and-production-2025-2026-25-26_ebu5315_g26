@@ -1,5 +1,5 @@
 /* ================================================================
-   game.js — Circle Master | Mobile-Optimized Game Logic
+   game.js — Circle Master | Mobile-Optimized Game 
    Features: i18n · Dark Theme · Font Size · Touch Events ·
              Dynamic Canvas Resize · Physics Engine
    ================================================================ */
