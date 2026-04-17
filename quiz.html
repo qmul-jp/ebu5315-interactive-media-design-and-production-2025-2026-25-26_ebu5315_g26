@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Geometry Quiz v3 | GCSE Math Learning</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="circle_geo_quiz_style_v3.css">
+</head>
+
+<body>
+    <!-- 统一顶部导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-circle"></i>
+            Circle Geometry Hub
+        </div>
+        <div class="main-nav">
+            <ul>
+                <li><a href="homepage.html" class="nav-link">Home</a></li>
+                <li><a href="game.html" class="nav-link">Game</a></li>
+                <li><a href="quiz.html" class="nav-link active">Quiz</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 隐私政策弹窗（伦理合规要求） -->
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="privacy-title">Privacy Policy</h2>
+            <p class="modal-desc" id="privacy-desc">
+                This quiz application stores all your learning data (including quiz progress, scores, and answered
+                questions) only on your local browser.
+                No data is uploaded to any server, shared with third parties, or used for any commercial purposes.
+                Your data privacy is fully protected.
+            </p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="privacy-confirm-btn" data-i18n="privacy_confirm">I Understand &
+                    Agree</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 休息提醒弹窗（健康护眼要求） -->
+    <div class="modal" id="rest-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="rest-title">Eye Care Reminder</h2>
+            <p class="modal-desc" id="rest-desc">
+                You have been using the app for 20 minutes. It's recommended to look at objects 6 meters away for 20
+                seconds to rest your eyes.
+            </p>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="rest-confirm-btn" data-i18n="rest_confirm">Got It</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 头部导航区域 -->
+    <header>
+        <!-- 全局答题进度条（创造力/用户体验优化） -->
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="quiz-progress-bar"></div>
+        </div>
+
+        <div class="header-top">
+            <a href="homepage.html" class="logo" id="home-logo">
+                <span>📐</span>
+                <span id="logo-text">Circle Geometry Learning</span>
+            </a>
+            <div class="control-panel">
+                <!-- 语言切换控件（多语言要求） -->
+                <div class="control-group">
+                    <label for="language-select" id="language-label">Language:</label>
+                    <select id="language-select">
+                        <option value="en">English</option>
+                        <option value="zh">中文</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="ja">日本語</option>
+                    </select>
+                </div>
+
+                <!-- 主题切换控件（健康护眼要求） -->
+                <div class="control-group">
+                    <label for="theme-select" id="theme-label">Theme:</label>
+                    <select id="theme-select">
+                        <option value="light" id="theme-light">Light</option>
+                        <option value="dark" id="theme-dark">Dark</option>
+                        <option value="eye-care" id="theme-eye">Eye Care</option>
+                        <option value="color-blind" id="theme-colorblind">Color Blind Friendly</option>
+                    </select>
+                </div>
+
+                <!-- 拖拽式字体大小调节控件（无障碍要求） -->
+                <div class="control-group">
+                    <label for="font-slider" id="font-label">Font Size:</label>
+                    <input type="range" id="font-slider" class="font-slider" min="12" max="24" value="16" step="1">
+                    <span class="font-size-value" id="font-size-value">16px</span>
+                </div>
+
+                <!-- 题目音频朗读控件（听力障碍无障碍要求） -->
+                <div class="control-group">
+                    <button class="btn btn-secondary audio-btn" id="audio-read-btn" title="Read Question Aloud">
+                        🔊 <span id="audio-text">Read</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 强制要求实现的面包屑导航 -->
+        <nav class="breadcrumb" id="breadcrumb">
+            <a href="homepage.html" class="breadcrumb-item" id="breadcrumb-home">Home</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="quiz.html" class="breadcrumb-item active" id="breadcrumb-quiz">Quiz</a>
+        </nav>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <!-- 朗读字幕显示区域（听力障碍无障碍要求） -->
+        <div class="caption-box" id="caption-container" style="display: none;">
+            <p class="caption-text" id="caption-text"></p>
+        </div>
+
+        <!-- 欢迎&级别选择页面（子页面1） -->
+        <section id="welcome-section" class="section active">
+            <h1 class="section-title" id="welcome-title">Circle Geometry Quiz</h1>
+            <p class="section-desc" id="welcome-desc">Test your understanding of GCSE-level circle theorems with our
+                interactive quiz. Choose your difficulty level to start learning!</p>
+
+            <!-- AI级别推荐提示 -->
+            <div class="recommend-box" id="recommend-box" style="display: none;">
+                <p id="recommend-text">🎉 Great job on the Foundation level! We recommend you try the Intermediate level
+                    next.</p>
+            </div>
+
+            <div class="level-grid">
+                <div class="level-card level-1" data-level="1">
+                    <h2 class="level-title" id="level1_title">Foundation Level</h2>
+                    <p class="level-desc" id="level1_desc">Basic circle theorem concepts, perfect for beginners. Covers
+                        core rules and simple calculations.</p>
+                    <span class="level-difficulty difficulty-easy" id="level1_diff">Easy</span>
+                </div>
+                <div class="level-card level-2" data-level="2">
+                    <h2 class="level-title" id="level2_title">Intermediate Level</h2>
+                    <p class="level-desc" id="level2_desc">Combined circle theorem problems, requiring multi-step
+                        reasoning and calculation.</p>
+                    <span class="level-difficulty difficulty-medium" id="level2_diff">Medium</span>
+                </div>
+                <div class="level-card level-3" data-level="3">
+                    <h2 class="level-title" id="level3_title">Higher Level</h2>
+                    <p class="level-desc" id="level3_desc">Challenging exam-style questions, combining multiple theorems
+                        and complex geometric reasoning.</p>
+                    <span class="level-difficulty difficulty-hard" id="level3_diff">Hard</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 测验答题页面（子页面2） -->
+        <section id="quiz-section" class="section">
+            <div class="quiz-header">
+                <div class="quiz-info" id="quiz-level-info">Level: Foundation | Question <span
+                        id="current-question">1</span> of <span id="total-questions">5</span></div>
+                <div class="quiz-info" id="quiz-score-info">Score: <span id="current-score">0</span></div>
+            </div>
+
+            <div class="question-card">
+                <h3 class="question-title" id="question-text"></h3>
+                <div class="options-grid" id="options-container"></div>
+                <div class="feedback-box" id="feedback-box"></div>
+            </div>
+
+            <div class="quiz-actions">
+                <button class="btn btn-secondary" id="exit-quiz-btn" data-i18n="btn_exit_quiz">Exit Quiz</button>
+                <button class="btn btn-primary" id="submit-answer-btn" disabled data-i18n="btn_submit_answer">Submit
+                    Answer</button>
+                <button class="btn btn-primary" id="next-btn" style="display: none;" data-i18n="btn_next">Next
+                    Question</button>
+            </div>
+        </section>
+
+        <!-- 测验结果页面（子页面3） -->
+        <section id="result-section" class="section">
+            <div class="result-card">
+                <h1 class="section-title" id="result-title">Quiz Completed!</h1>
+                <div class="score-circle">
+                    <span class="score-number" id="final-score">0</span>
+                    <span class="score-total" id="final-total">/ 5</span>
+                </div>
+                <p class="result-text" id="result-desc">Well done on completing the quiz! Keep practicing to master
+                    circle theorems.</p>
+                <div class="result-actions">
+                    <button class="btn btn-primary" id="restart-btn" data-i18n="btn_restart">Try Another
+                        Level</button>
+                    <button class="btn btn-secondary" id="review-btn" data-i18n="btn_review">Review Answers</button>
+                </div>
+            </div>
+
+            <div class="review-section" id="review-container" style="display: none;">
+                <h2 class="review-title" id="review-title">Your Answer Review</h2>
+                <div id="review-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <p id="footer-text">© 2026 Circle Geometry Learning | EBU5315 Interactive Media Design Coursework</p>
+    </footer>
+
+    <script src="circle_geo_quiz_script_v3.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+
+</html>

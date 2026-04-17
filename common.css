@@ -1,0 +1,37 @@
+/* 仅新增跳转按钮样式，不修改原有样式 */
+.nav-btn {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    border: none;
+}
+
+.nav-btn:hover {
+    background-color: #45a049;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.back-btn:hover {
+    background-color: #1976D2;
+}
+
+/* 保留原有公共样式（如果有） */
+/* 👇 粘贴你的原有公共CSS内容（若有） */
