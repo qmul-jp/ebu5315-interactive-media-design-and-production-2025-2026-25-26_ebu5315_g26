@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Geometry Learning | GCSE Math</title>
+    <link rel="stylesheet" href="homepage_v3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body id="bodyRoot">
+    <!-- Navbar & Breadcrumb -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-circle"></i>
+            Circle Geometry Hub
+        </div>
+        <div class="breadcrumb">Home > Circle Theorems</div>
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="main-nav">
+            <ul>
+                <li><a href="#" class="nav-link active">Home</a></li>
+                <li><a href="#theorems" class="nav-link">Theorems</a></li>
+                <li><a href="#game" class="nav-link">Game</a></li>
+                <li><a href="#quiz" class="nav-link">Quiz</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="font-btn" id="fontSmall"><i class="fas fa-font"></i> A-</button>
+            <button class="font-btn" id="fontBig"><i class="fas fa-font"></i> A+</button>
+            <button class="theme-btn" id="themeBtn">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Canvas Animation (No Video) -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h1>Interactive Circle Geometry Learning</h1>
+            <p>Master GCSE circle theorems with animations, games, and AI help</p>
+            <div class="animation-container">
+                <canvas id="heroCanvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Circle Theorems -->
+    <section class="theorems" id="theorems">
+        <h2>Key Circle Theorems</h2>
+        <div class="theorem-cards">
+            <div class="card">
+                <h3>Angle at Center</h3>
+                <p>The angle at the center is twice the angle at the circumference.</p>
+                <canvas class="geo-canvas" id="canvas1"></canvas>
+            </div>
+            <div class="card">
+                <h3>Cyclic Quadrilateral</h3>
+                <p>Opposite angles in a cyclic quadrilateral sum to 180°.</p>
+                <canvas class="geo-canvas" id="canvas2"></canvas>
+            </div>
+            <div class="card">
+                <h3>Tangent & Radius</h3>
+                <p>Tangent is perpendicular to the radius at the point of contact.</p>
+                <canvas class="geo-canvas" id="canvas3"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- USP Section -->
+    <section class="usp">
+        <h2>Why Choose Us?</h2>
+        <div class="usp-cards">
+            <div class="usp-card"><i class="fas fa-robot"></i> AI Tutor Support</div>
+            <div class="usp-card"><i class="fas-palette"></i> Visual Animations</div>
+            <div class="usp-card"><i class="fas fa-gamepad"></i> Interactive Games</div>
+            <div class="usp-card"><i class="fas fa-mobile-alt"></i> Mobile Friendly</div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot -->
+    <section class="ai-chat" id="ai">
+        <h2>AI Geometry Assistant</h2>
+        <div class="ai-greeting">
+            <i class="fas fa-robot"></i> Hello! Ask me any circle theorem question.
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-bar">
+                <input type="text" id="chatInput" placeholder="Type your question...">
+                <button class="chat-btn" id="sendChat">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advertisement Banner -->
+    <section class="ads">
+        <div class="ads-banner">
+            <i class="fas fa-ad"></i>
+            <h3>Premium Math Learning Package</h3>
+            <p>Unlock full quizzes, progress tracking, and live tutoring — Learn More</p>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <form id="contactForm" class="contact-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" required placeholder="Your name">
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required placeholder="your@email.com">
+
+            <label for="message">Message</label>
+            <textarea id="message" rows="4" required placeholder="Your message..."></textarea>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Circle Geometry Learning | GCSE Math Helper</p>
+        <p>Designed for EBU5315 Coursework | Queen Mary University of London</p>
+    </footer>
+
+    <script src="homepage_v3.js"></script>
+</body>
+
+</html>
