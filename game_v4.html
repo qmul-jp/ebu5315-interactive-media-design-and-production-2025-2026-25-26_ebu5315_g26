@@ -10,6 +10,245 @@
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header" role="banner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="homepage_v4.html" aria-label="Home">
+                <svg class="icon-home" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                </svg>
+                <span id="nav-home-text">Home</span>
+            </a>
+            <span class="sep" aria-hidden="true">/</span>
+            <span id="nav-game" aria-current="page">Game</span>
+            <span class="sep" aria-hidden="true">/</span>
+            <a href="quiz_v4.html" id="nav-quiz-link">
+                <span id="nav-quiz">Quiz</span>
+            </a>
+        </nav>
+        <div class="a11y-toolbar" role="toolbar" aria-label="Accessibility Tools">
+            <!-- Game Mode Selector -->
+            <div class="mode-selector-wrap">
+                <label id="mode-label-text" class="mode-label" for="mode-select">Mode:</label>
+                <select id="mode-select" class="mode-select" aria-labelledby="mode-label-text"
+                    onchange="handleModeChange(this.value)">
+                    <optgroup id="optgroup-classic" label="Classic">
+                        <option id="opt-classic" value="classic">Classic</option>
+                    </optgroup>
+                    <optgroup id="optgroup-theorems" label="Circle Theorems">
+                        <option id="opt-angle_centre" value="angle_centre">Angle at Centre</option>
+                        <option id="opt-angle_semicircle" value="angle_semicircle">Angles in Semicircle</option>
+                        <option id="opt-cyclic_quad" value="cyclic_quad">Cyclic Quadrilateral</option>
+                        <option id="opt-same_arc" value="same_arc">Same Segment</option>
+                        <option id="opt-alternate_seg" value="alternate_seg">Alternate Segment</option>
+                        <option id="opt-tangent_radius" value="tangent_radius">Tangent-Radius (90)</option>
+                        <option id="opt-tangent_equal" value="tangent_equal">Tangents from Same Point</option>
+                        <option id="opt-arrow_theorem" value="arrow_theorem">Arrow Head Theorem</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="toolbar-divider" aria-hidden="true"></div>
+
+            <!-- 主题选择器 - 替代原来的按钮 -->
+            <div class="theme-selector-wrap">
+                <label id="theme-label-text" class="mode-label" for="theme-select">Theme:</label>
+                <select id="theme-select" class="mode-select" aria-labelledby="theme-label-text"
+                        onchange="handleThemeChange(this.value)">
+                    <option id="opt-theme-light" value="light">Light</option>
+                    <option id="opt-theme-dark" value="dark">Dark</option>
+                    <option id="opt-theme-eyecare" value="eyecare">Eye Care</option>
+                    <option id="opt-theme-colorblind" value="colorblind">Color Blind Friendly</option>
+                </select>
+            </div>
+
+            <div class="toolbar-divider" aria-hidden="true"></div>
+
+            <button id="btn-lang" class="btn btn--lang" type="button" onclick="toggleLang()"
+                aria-label="Switch language">
+                <span id="btn-lang-text">ZH</span>
+            </button>
+            <button id="btn-font-up" class="btn btn--font" type="button" onclick="changeFontSize(1)"
+                aria-label="Increase font size">A+</button>
+            <button id="btn-font-dn" class="btn btn--font" type="button" onclick="changeFontSize(-1)"
+                aria-label="Decrease font size">A-</button>
+        </div>
+    </header>
+
+    <!-- 其余内容保持不变 -->
+    <!-- ── MAIN CONTENT ────────────────────────────────────────────── -->
+    <main id="main-content">
+        <div class="game-container">
+
+            <!-- Title + Mode Badge -->
+            <div class="game-header-block">
+                <div class="game-title-row">
+                    <h1 id="game-title" class="game-title">Circle Master</h1>
+                    <span id="mode-badge" class="mode-badge mode-badge--classic">Classic</span>
+                </div>
+                <p id="desc" class="game-desc">Find the circle matching the given measurement.</p>
+                <!-- Theorem description bar (hidden in Classic mode) -->
+                <div id="theorem-desc-bar" class="theorem-desc-bar" hidden>
+                    <span id="theorem-desc-text"></span>
+                </div>
+            </div>
+
+            <!-- HUD -->
+            <div class="hud" role="status" aria-live="polite" aria-atomic="false">
+                <div class="hud__item">
+                    <span id="txt-score" class="hud__label">Score</span>
+                    <span id="score" class="hud__value">0</span>
+                </div>
+                <div class="hud__item">
+                    <span id="txt-lives" class="hud__label">Lives</span>
+                    <span id="hearts-display" class="hearts-display hud__value" aria-label="3 lives remaining"></span>
+                </div>
+                <div class="hud__item">
+                    <span id="txt-level" class="hud__label">Level</span>
+                    <span id="level" class="hud__value">1</span>
+                </div>
+                <div class="hud__item">
+                    <span id="txt-timer" class="hud__label">Time</span>
+                    <span id="timer" class="hud__value hud__value--timer">--</span>
+                </div>
+            </div>
+
+            <!-- Combo -->
+            <div id="combo-text" class="combo-bar" aria-live="polite" aria-atomic="true"></div>
+
+            <!-- Question Box -->
+            <div id="question-box" class="question-box" role="status" aria-live="polite">
+                <span class="question-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                    </svg>
+                </span>
+                <span id="question-text">Click [Start] to begin!</span>
+            </div>
+
+            <!-- Canvas Wrapper — the game area -->
+            <div id="canvas-wrapper" class="canvas-wrapper">
+                <canvas id="gameCanvas" role="application" aria-label="Game canvas — click the correct circle"></canvas>
+
+                <!-- Idle overlay (pointer-events:none, will never block canvas) -->
+                <div id="canvas-idle" class="canvas-idle-overlay">
+                    <svg class="idle-circle-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(52,152,219,.5)" stroke-width="3" />
+                        <circle cx="50" cy="50" r="28" fill="rgba(46,204,113,.18)" stroke="rgba(46,204,113,.7)"
+                            stroke-width="2.5" />
+                        <circle cx="50" cy="50" r="6" fill="rgba(46,204,113,.9)" />
+                    </svg>
+                    <span id="idle-text" class="canvas-idle-text">Tap Start to Play</span>
+                </div>
+
+                <!-- Floating score popups -->
+                <div id="float-popup" class="float-popup" aria-hidden="true"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-bar">
+                <button id="btn-start" class="btn btn--start" type="button" onclick="startGame()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <span id="btn-start-text">Start</span>
+                </button>
+                <button id="btn-reset" class="btn btn--reset" type="button" onclick="showReset()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                    </svg>
+                    <span id="btn-reset-text">Reset</span>
+                </button>
+                <button id="btn-hint" class="btn btn--hint" type="button" onclick="showHint()">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
+                    </svg>
+                    <span id="btn-hint-text">Hint</span>
+                </button>
+            </div>
+
+            <!-- Game Over Banner -->
+            <section id="game-over" class="game-over-banner" hidden aria-live="assertive">
+                <div class="game-over-inner">
+                    <svg class="gameover-icon" viewBox="0 0 52 52" aria-hidden="true">
+                        <circle cx="26" cy="26" r="25" fill="none" stroke="#e74c3c" stroke-width="2.5" />
+                        <path d="M16 16l20 20M36 16L16 36" stroke="#e74c3c" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                    <h2 id="gameover-title-text" class="gameover-title">Game Over!</h2>
+                    <p class="gameover-score">
+                        <span id="gameover-score-label">Final Score</span>:
+                        <strong id="gameover-score-value">0</strong>
+                    </p>
+                    <p class="gameover-level">
+                        <span id="gameover-level-label">Level Reached</span>:
+                        <strong id="gameover-level-value">1</strong>
+                    </p>
+                    <p class="gameover-mode">
+                        <span id="gameover-mode-label">Mode</span>:
+                        <strong id="gameover-mode-value">Classic</strong>
+                    </p>
+                    <button id="btn-restart" class="btn btn--start gameover-restart" type="button"
+                        onclick="startGame()">
+                        <span id="btn-restart-text">Play Again</span>
+                    </button>
+                </div>
+            </section>
+
+        </div><!-- /.game-container -->
+    </main>
+
+    <!-- ── HINT MODAL ───────────────────────────────────────────────── -->
+    <div id="hint-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="hint-title" hidden>
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="hint-title" class="modal-title">Formulas</h2>
+                <button id="btn-hint-close" class="btn btn--close" type="button" onclick="hideHint()"
+                    aria-label="Close hint">
+                    <span id="hint-close-text">Got it</span>
+                </button>
+            </div>
+            <div id="hint-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ── RESET CONFIRM MODAL ─────────────────────────────────────── -->
+    <div id="reset-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="reset-title" hidden>
+        <div class="modal-box modal-box--sm">
+            <div class="modal-header">
+                <h2 id="reset-title" class="modal-title">Reset Game?</h2>
+            </div>
+            <div class="modal-body">
+                <p id="reset-confirm-text" style="font-size:.9rem;color:var(--clr-text-muted);">
+                    Your current progress will be lost.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button id="btn-cancel-reset" class="btn btn--close" type="button" onclick="hideReset()">Cancel</button>
+                <button id="btn-confirm-reset" class="btn btn--reset" type="button"
+                    onclick="resetGame()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game_v4.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-colorblind="false">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Circle Master</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="game_v4.css" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
     <!-- ── HEADER ──────────────────────────────────────────────────── -->
     <header class="site-header" role="banner">

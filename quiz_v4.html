@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Circle Geometry Quiz v4</title>
+    <link rel="stylesheet" href="quiz_v4.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <!-- 隐私弹窗 -->
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="privacy-title">Privacy Policy</h2>
+            <p class="modal-desc" id="privacy-desc">This quiz stores data locally on your browser.</p>
+            <div class="modal-actions">
+                <button class="btn btn--primary" id="privacy-confirm-btn">I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 休息提醒弹窗 -->
+    <div class="modal" id="rest-modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="rest-title">Eye Care Reminder</h2>
+            <p class="modal-desc" id="rest-desc">Look at objects 6 meters away for 20 seconds.</p>
+            <div class="modal-actions">
+                <button class="btn btn--primary" id="rest-confirm-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 统一头部 -->
+    <header class="site-header">
+        <div class="breadcrumb">
+            <span>📝</span>
+            <a href="homepage_v4.html">Circle Geometry Hub</a>
+            <span>/</span>
+            <span id="breadcrumb-quiz">Quiz</span>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="homepage_v4.html" class="nav-link" id="nav-home">Home</a></li>
+                <li><a href="game_v4.html" class="nav-link" id="nav-game">Game</a></li>
+                <li><a href="quiz-v4.html" class="nav-link active" id="nav-quiz">Quiz</a></li>
+            </ul>
+        </nav>
+        <div class="a11y-toolbar">
+            <select id="themeSelect" class="btn theme-select" aria-label="Theme">
+                <option value="light">☀️ Light</option>
+                <option value="dark">🌙 Dark</option>
+                <option value="eye-care">👁️ Eye Care</option>
+            </select>
+            <button id="langToggle" class="btn btn--lang" onclick="toggleLang()"><span id="lang-text">中文</span></button>
+            <button id="fontDecrease" class="btn btn--font" onclick="changeFontSize(-1)">A-</button>
+            <span id="fontSizeValue" class="font-size-value">16px</span>
+            <button id="fontIncrease" class="btn btn--font" onclick="changeFontSize(1)">A+</button>
+            <button id="audio-read-btn" class="btn btn--secondary" onclick="speakQuestion()">🔊 Read</button>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="quiz-progress-bar"></div>
+        </div>
+    </header>
+
+    <main id="main-content" class="container">
+        <!-- 朗读字幕 -->
+        <div class="caption-box" id="caption-container" style="display:none;">
+            <p class="caption-text" id="caption-text"></p>
+        </div>
+
+        <!-- 欢迎页 -->
+        <section id="welcome-section" class="section active">
+            <h1 class="section-title" id="welcome-title">Circle Geometry Quiz</h1>
+            <p class="section-desc" id="welcome-desc">Test your understanding of GCSE-level circle theorems.</p>
+            <div class="recommend-box" id="recommend-box" style="display:none;">
+                <p id="recommend-text"></p>
+            </div>
+            <div class="level-grid">
+                <div class="level-card level-1" data-level="1" onclick="startQuiz(1)">
+                    <h2 class="level-title" id="level1_title">Foundation Level</h2>
+                    <p class="level-desc" id="level1_desc">Basic concepts, perfect for beginners.</p>
+                    <span class="level-difficulty difficulty-easy" id="level1_diff">Easy</span>
+                </div>
+                <div class="level-card level-2" data-level="2" onclick="startQuiz(2)">
+                    <h2 class="level-title" id="level2_title">Intermediate Level</h2>
+                    <p class="level-desc" id="level2_desc">Multi-step reasoning and calculation.</p>
+                    <span class="level-difficulty difficulty-medium" id="level2_diff">Medium</span>
+                </div>
+                <div class="level-card level-3" data-level="3" onclick="startQuiz(3)">
+                    <h2 class="level-title" id="level3_title">Higher Level</h2>
+                    <p class="level-desc" id="level3_desc">Challenging exam-style questions.</p>
+                    <span class="level-difficulty difficulty-hard" id="level3_diff">Hard</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 答题页 -->
+        <section id="quiz-section" class="section">
+            <div class="quiz-header">
+                <div class="quiz-info" id="quiz-level-info">Level: Foundation | Question 1 of 5</div>
+                <div class="quiz-info" id="quiz-score-info">Score: <span id="current-score">0</span></div>
+            </div>
+            <div class="question-card">
+                <h3 class="question-title" id="question-text"></h3>
+                <div class="options-grid" id="options-container"></div>
+                <div class="feedback-box" id="feedback-box"></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="btn btn--secondary" id="exit-quiz-btn" onclick="exitQuiz()">Exit Quiz</button>
+                <button class="btn btn--primary" id="submit-answer-btn" onclick="handleSubmitAnswer()" disabled>Submit
+                    Answer</button>
+                <button class="btn btn--primary" id="next-btn" onclick="handleNextQuestion()" style="display:none;">Next
+                    Question</button>
+            </div>
+        </section>
+
+        <!-- 结果页 -->
+        <section id="result-section" class="section">
+            <div class="result-card">
+                <h1 class="section-title" id="result-title">Quiz Completed!</h1>
+                <div class="score-circle">
+                    <span class="score-number" id="final-score">0</span>
+                    <span class="score-total" id="final-total">/ 5</span>
+                </div>
+                <p class="result-desc" id="result-desc">Well done! Keep practicing.</p>
+                <div class="result-actions">
+                    <button class="btn btn--primary" id="restart-btn" onclick="restartQuiz()">Try Another Level</button>
+                    <button class="btn btn--secondary" id="review-btn" onclick="toggleReview()">Review Answers</button>
+                </div>
+            </div>
+            <div class="review-section" id="review-container" style="display:none;">
+                <h2 class="review-title" id="review-title">Your Answer Review</h2>
+                <div id="review-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer 与 Homepage 统一风格 -->
+    <footer class="footer">
+        <p id="footer-line1">&copy; 2026 Circle Geometry Learning | GCSE Math Helper</p>
+        <p id="footer-line2">Designed for EBU5315 Coursework | Queen Mary University of London</p>
+    </footer>
+
+    <script src="quiz_v4.js"></script>
+</body>
+
+</html>
