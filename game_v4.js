@@ -1,6 +1,3 @@
-/* ─────────────────────────────────────────────────────────────────
-   GAME MODE REGISTRY
-   ───────────────────────────────────────────────────────────────── */
 const MODES = {
     classic: {
         key:'classic', category:'classic', descKey:'descClassic',
